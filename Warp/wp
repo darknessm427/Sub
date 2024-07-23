@@ -217,10 +217,10 @@
         "local_address": [
           "10.2.0.2/32"
         ],
-        "private_key": "iCzkPR8HSu4miQlCzJJHGZgKZwrEtSXZ+9ZRo+6YcGM=",
-        "server": "37.19.221.196",
+        "private_key": "EHdMrOWtSRgouLS0nW0ZZn1pUuHzuCA1IN6vsDXKOXc=",
+        "server": "156.146.54.81",
         "server_port": 51820,
-        "peer_public_key": "4wqoqnWaoR8FLWkihmN4DVma/8lFn1fXQMRVs/4TD0A=",
+        "peer_public_key": "FF79Ab2fcEYtsyNYxviTUtVxJLuvUcoEOpl8DYbdsgg=",
         "mtu": 1280
       },
       {
