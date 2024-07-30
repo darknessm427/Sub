@@ -87,7 +87,7 @@
       "tag": "select",
       "outbounds": [
         "auto",
-        "𝕊𝕙𝕖𝕣𝕧𝕚𝕟 ˙◠˙ 🇳🇱 § 0"
+        "𓄂𓆃 🗽 🇳🇱 § 0"
       ],
       "default": "auto"
     },
@@ -95,7 +95,7 @@
       "type": "urltest",
       "tag": "auto",
       "outbounds": [
-        "𝕊𝕙𝕖𝕣𝕧𝕚𝕟 ˙◠˙ 🇳🇱 § 0"
+        "𓄂𓆃 🗽 🇳🇱 § 0"
       ],
       "url": "http://connectivitycheck.gstatic.com/generate_204",
       "interval": "10m0s",
@@ -103,7 +103,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "𝕊𝕙𝕖𝕣𝕧𝕚𝕟 ˙◠˙ 🇳🇱 § 0",
+      "tag": "𓄂𓆃 🗽 🇳🇱 § 0",
       "server": "109.201.152.181",
       "server_port": 443,
       "method": "aes-128-cfb",
