@@ -1,5 +1,4 @@
-ÐΛɌ₭ᑎΞ𐒡𐒡🫥
-//profile-title: base64:8J+RvsOQzpvJjOKCreGRjs6e8JCSofCQkqHwn6ulc3Pwn6ul8J+Rvg==
+//profile-title: base64:8J+RvsOQzpvJjOKCreGRjs6e8JCSofCQkqHwn6ulQGRhcmtuZXNzXzQyN/Cfq6Xwn5G+
 //profile-update-interval: 24
 //subscription-userinfo: upload=1073741824; download=204010946560; total=107374182400; expire=1722674540
 //profile-web-page-url: @darkness_427
