@@ -1,7 +1,7 @@
 [
 
     {
-        "remarks": "WoW_1",
+        "remarks": "WoW",
         "log": {
             "loglevel": "warning"
         },
@@ -214,7 +214,7 @@
         "stats": {}
     },
     {
-        "remarks": "Warp-1",
+        "remarks": "Warp",
         "log": {
             "loglevel": "warning"
         },
@@ -397,7 +397,7 @@
         "stats": {}
     },
     {
-        "remarks": "WoW_2",
+        "remarks": "WoW",
         "log": {
             "loglevel": "warning"
         },
@@ -610,7 +610,7 @@
         "stats": {}
     },
     {
-        "remarks": "Warp-2",
+        "remarks": "Warp",
         "log": {
             "loglevel": "warning"
         },
@@ -793,7 +793,7 @@
         "stats": {}
     },
     {
-        "remarks": "WoW_3",
+        "remarks": "WoW",
         "log": {
             "loglevel": "warning"
         },
@@ -1006,7 +1006,7 @@
         "stats": {}
     },
     {
-        "remarks": "Warp-3",
+        "remarks": "Warp",
         "log": {
             "loglevel": "warning"
         },
@@ -1189,7 +1189,7 @@
         "stats": {}
     },
     {
-        "remarks": "WoW_4",
+        "remarks": "WoW",
         "log": {
             "loglevel": "warning"
         },
@@ -1402,7 +1402,7 @@
         "stats": {}
     },
     {
-        "remarks": "Warp-4",
+        "remarks": "Warp",
         "log": {
             "loglevel": "warning"
         },
