@@ -1,0 +1,2236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Selection</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      :root {
+        --color-1: #186CB8;
+        --color-2: #2a9a9f;
+        --color-3: #f98d00;
+        --color-4: #e83611;
+        --color-5: #f1b211;
+      }
+
+      body {
+        font-family: 'Vazir', sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        gap: 40px;
+        align-items: center;
+        align-content: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #061D2F, #323538);
+        color: #F5F6FA;
+        user-select: none;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        /* Transition برای بلور حذف شد */
+        /* transition: filter 0.3s ease-in-out; */
+      }
+
+      /* کلاس بلور حذف شد */
+      /* body.blur-background {
+        filter: blur(5px);
+      } */
+      
+      #visit-counter {
+      position: fixed;
+      top: 0px;
+      right: 0px;
+      padding: 4px 8px;
+      background: #2B2B2B80;
+      color: white;
+      font-family: 'vazir', sans-serif;
+      border-radius: 0px 0px 0px 15px ;
+      box-shadow: 0 0 5px #F9FF00;
+      display: flex;
+      align-items: center;
+      font-size: 10px;
+      z-index: 9999;
+    }
+
+    #visit-counter i {
+      margin-right: 3px;
+      text-shadow: 0 0 5px #FF0085;
+      font-size: 10px;
+    }
+
+    #visit-counter span {
+      font-weight: bold;
+      text-shadow: 0 0 5px #07FCFF;
+      font-size: 10px;
+    }
+    
+      header {
+        padding: 20px;
+        margin-top: 40px;
+        width: 80%;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 24px;
+        background: linear-gradient(to right, #0A2643, #260440);
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 2s ease-in-out;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      }
+
+      header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(to right, var(--color-1), var(--color-2), var(--color-3), var(--color-4), var(--color-5));
+        animation: neonBorder 1.5s infinite alternate;
+      }
+
+      h1 {
+        color: transparent;
+        font-family: sans-serif;
+        font-size: 10vw;
+        font-weight: 700;
+        text-align: center;
+        width: min-content;
+        margin: auto;
+        text-transform: uppercase;
+        background: linear-gradient(220deg, var(--color-1) 19%, transparent 19%, transparent 20%,
+            var(--color-2) 20%, var(--color-2) 39%, transparent 39%, transparent 40%,
+            var(--color-3) 40%, var(--color-3) 59%, transparent 59%, transparent 60%,
+            var(--color-4) 60%, var(--color-4) 79%, transparent 79%, transparent 80%,
+            var(--color-5) 80%);
+        -webkit-background-clip: text;
+        animation: textAnimation 3s ease-in-out infinite, blinkText 7s ease-in-out infinite;
+        text-shadow: none;
+      }
+
+      @media screen and (min-width: 768px) {
+        h1 {
+          font-size: 10vw;
+        }
+      }
+
+      @keyframes blinkText {
+        0% {
+          opacity: 1;
+        }
+
+        25% {
+          opacity: 0.5;
+        }
+
+        50% {
+          opacity: 0.1;
+        }
+
+        75% {
+          opacity: 0.5;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes textAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+
+        50% {
+          background-position: 100% 50%;
+        }
+
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes neonBorder {
+        0% {
+          box-shadow: 0 0 15px var(--color-1), 0 0 30px var(--color-1), 0 0 50px var(--color-1);
+          opacity: 1;
+        }
+
+        100% {
+          box-shadow: 0 0 5px var(--color-1), 0 0 10px var(--color-1), 0 0 15px var(--color-1);
+          opacity: 0.5;
+        }
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+
+      .clientSelectWrapper {
+        display: inline-block;
+        background-color: #2B3338;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+        width: 100vw;
+        max-width: 450px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .clientSelectWrapper:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0px 25px #074270;
+      }
+
+      .clientSelectWrapper select {
+        width: 100%;
+        padding: 12px 15px;
+        background-color: #444B52;
+        color: #E1F2F1;
+        border: 1px solid #555C62;
+        border-radius: 8px;
+        font-size: 16px;
+        font-family: 'vazir', sans-serif;
+        font-weight: 500;
+        outline: none;
+        transition: background-color 0.3s ease, border 0.3s ease;
+      }
+
+      .clientSelectWrapper select:hover,
+      .clientSelectWrapper select:focus {
+        background-color: #3A4349;
+        border: 1px solid #00B4CC;
+      }
+
+      .clientSelectWrapper h2 {
+        color: #34AC9E;
+        font-size: 20px;
+        font-family: 'vazir', sans-serif;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      h3 , h3 {
+        color: #0FB7B4;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+      }
+
+      .clientSection {
+        margin-bottom: 30px;
+      }
+
+      .sessionSelect {
+        margin: 10px 0;
+        padding: 10px;
+        width: 200px;
+        font-size: 16px;
+      }
+
+      .linksContainer {
+        display: none;
+      }
+
+      .linkCard {
+        background-color: #C5C5C5;
+        border: 2px solid #087FAC;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 10px 0;
+        display: flex;
+        flex-direction: column; /* تغییر جهت فلکس برای چیدمان عمودی */
+        align-items: center;
+      }
+
+      .linkCard .link-info {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%; /* اطمینان از عرض کامل */
+      }
+
+
+      .linkCard a {
+        text-decoration: none;
+        color: #000000;
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        border: 1px dotted #868686;
+        padding: 10px;
+        border-radius: 5px;
+        width: 200px;
+        max-width: calc(100% - 120px); /* تنظیم حداکثر عرض برای جا شدن دکمه‌ها */
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-all;
+        flex-grow: 1; /* اجازه رشد به لینک */
+      }
+
+      .linkCard span {
+        font-weight: bold;
+        color: #121212;
+        font-size: 12px;
+        
+      }
+
+      .buttonContainer {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .linkCard button {
+        background-color: #007BFF;
+        color: #FFFFFF;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .linkCard button:hover {
+        background-color: #006CE0;
+      }
+
+      .copyButton i,
+      .qrButton i {
+        font-size: 20px;
+      }
+
+      .checkmark {
+        color: green;
+        font-size: 20px;
+        display: none;
+      }
+
+      .clientTitle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .clientTitle i {
+        font-size: 24px;
+        color: #007BFF;
+      }
+
+      .copyButton.clicked i {
+        display: none;
+      }
+
+      .copyButton.clicked .checkmark {
+        display: inline-block;
+      }
+
+       /* استایل برای نمایش QR کد در کنار دکمه */
+       .qrCodeContainer {
+           display: none; /* به صورت پیش‌فرض مخفی */
+           margin-top: 10px; /* فاصله از دکمه‌ها */
+           text-align: center;
+       }
+
+       .qrCodeContainer img {
+           width: 200px; /* اندازه QR کد را تنظیم کنید */
+           height: 200px;
+           border: 2px solid #087FAC;
+           border-radius: 5px;
+       }
+
+
+      .stepbox {
+        width: 85%;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .steps {
+        display: flex;
+        flex-wrap: warp ;
+        align-items: center;
+      }
+
+      .step {
+        background: #2B3338;
+        border-radius: 10px;
+        padding: 2rem;
+        width: 90%;
+        align-content: center;
+        margin-bottom: 1rem;
+        transition: transform 0.3s ease;
+      }
+
+      .step:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0px 35px #014C87;
+      }
+
+      .step-icon {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .btn {
+        display: inline-block;
+        background: linear-gradient(180deg, #0865F8 0%, #03B0CC 100%);
+        color: black;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 1rem;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+        border: none;
+      }
+
+      .btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0px 15px #00ACBB;
+      }
+
+      .walkthrough {
+        position: fixed;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: #414141CC;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .walkthrough-content {
+        background: #282835;
+        padding: 2rem;
+        border-radius: 10px;
+        max-width: 70%;
+        text-align: center;
+        color: #FFFFFF;
+      }
+
+      .walkthrough-step img {
+        width: 90%;
+        max-width: 280px;
+        height: 90%;
+        display: block;
+        margin: 0 auto;
+      }
+
+      .walkthrough-step {
+        display: none;
+      }
+
+      .walkthrough-step.active {
+        display: block;
+      }
+
+      .walkthrough-buttons {
+        margin-top: 1rem;
+      }
+
+      @media (min-width: 768px) {
+        .steps {
+          flex-direction: row;
+          justify-content: space-around;
+        }
+
+        .step {
+          width: 30%;
+          margin-bottom: 0;
+        }
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-top: 10px;
+        transition: transform 0.3s ease;
+      }
+
+      img:hover {
+        transform: scale(1.05);
+      }
+
+      .logo {
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        text-align: center;
+        z-index: 10;
+        cursor: pointer;
+      }
+
+      .logopic {
+        border-image: gray;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        object-fit: cover;
+        animation: pulse 2s infinite, neonCircle 4s infinite linear;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+
+        50% {
+          transform: scale(1.05);
+        }
+
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes neonCircle {
+        0% {
+          box-shadow: 0 0 10px rgba(255, 0, 0, 0.6), 0 0 15px rgba(0, 255, 0, 0.6), 0 0 20px rgba(0, 0, 255, 0.6);
+        }
+
+        25% {
+          box-shadow: 20px 0 10px rgba(255, 0, 255, 0.6), 0 20px 15px rgba(0, 255, 255, 0.6), -20px 0 20px rgba(255, 255, 0, 0.6);
+        }
+
+        50% {
+          box-shadow: 0 20px 10px rgba(255, 0, 0, 0.6), -20px 0 15px rgba(0, 255, 0, 0.6), 20px 0 20px rgba(0, 0, 255, 0.6);
+        }
+
+        75% {
+          box-shadow: -20px 0 10px rgba(255, 0, 255, 0.6), 0 -20px 15px rgba(0, 255, 255, 0.6), 20px 0 20px rgba(255, 255, 0, 0.6);
+        }
+
+        100% {
+          box-shadow: 0 0 10px rgba(255, 0, 0, 0.6), 0 0 15px rgba(0, 255, 0, 0.6), 0 0 20px rgba(0, 0, 255, 0.6);
+        }
+      }
+
+      .social-links {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        left: 40px;
+        z-index: 20;
+        background-color: transparent;
+        padding: 10px;
+        transform: scale(0);
+        transition: transform 0.3s ease;
+      }
+
+      .social-links a {
+        display: inline-block;
+        margin: 0 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #FFF50000;
+        text-align: center;
+        line-height: 40px;
+        color: white;
+        font-size: 24px;
+        text-decoration: none;
+        animation: slideOut 0.5s ease-out forwards;
+      }
+
+      @keyframes slideOut {
+        0% {
+          transform: scale(0) translate(0, 0);
+        }
+
+        100% {
+          transform: scale(1) translate(20px, -20px);
+        }
+      }
+
+      .social-links a.telegram {
+        animation-delay: 0.3s;
+        box-shadow: 0 0 10px #00BAFF;
+      }
+
+      .social-links a.github {
+        animation-delay: 0.5s;
+        box-shadow: 0 0 10px #FF00E4;
+      }
+
+      .social-links a.twitter {
+        animation-delay: 0.7s;
+
+        box-shadow: 0 0 10px #FFFF00;
+      }
+
+      .social-links a:hover {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 1);
+      }
+
+      .social-links a img {
+        margin: 0px 10px 10px 0px;
+        width: 40px;
+        height: 40px;
+      }
+
+      h5 {
+        color: #AA65FF;
+      }
+
+      p {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: 18px;
+      }
+
+      .fab-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #6200ea;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0px 0px 10px 5px #9E8AFF;
+        transition: background-color 0.3s;
+      }
+
+      .fab-button:hover {
+        background-color: #3700b3;
+      }
+
+      .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .popup-content {
+        background-color: #333333;
+        color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        width: 80%;
+        max-width: 500px;
+        text-align: right;
+        position: relative;
+      }
+
+      .popup h2 {
+        color: #bb86fc;
+      }
+
+      .popup a {
+        color: #bb86fc;
+        text-decoration: none;
+        font-size: 16px;
+        display: block;
+        margin: 10px 0;
+      }
+
+      .popup a:hover {
+        text-decoration: underline;
+      }
+
+      .close-btn {
+        background-color: #FA0000;
+        color: white;
+        border: none;
+        padding: 0px;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        font-size: 20px;
+      }
+
+      .suggestion {
+        margin-top: 20px;
+        font-size: 16px;
+        color: #e0e0e0;
+      }
+
+      .suggestion a {
+        color: #FF8C00;
+        text-decoration: none;
+      }
+
+      .footer {
+        position: fixed;
+        align-items: end;
+        display: fixed;
+        justify-content: center;
+        bottom: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #FFFFFF;
+        font-size: 18px;
+        font-family: 'Saberi', sans-serif;
+        letter-spacing: 2px;
+        animation: fade-in 6s ease-in-out infinite alternate;
+      }
+
+      @keyframes fade-in {
+        0% {
+          color: #BB86FC;
+          text-shadow: 0 0 5px #BB86FC, 0 0 7px #6200EA;
+        }
+
+        25% {
+          color: #FF8C00;
+          text-shadow: 0 0 7px #FF8C00, 0 0 10px #ff4500;
+        }
+
+        50% {
+          color: #F55297;
+          text-shadow: 0 0 10px #FF52C5, 0 0 13px #FF007A;
+        }
+
+        75% {
+          color: #00FF83;
+          text-shadow: 0 0 16px #00e676, 0 0 20px #00C853;
+        }
+
+        100% {
+          color: #6372FF;
+          text-shadow: 0 0 20px #6A87FA, 0 0 23px #001FFF;
+        }
+    </style>
+  </head>
+  <body>
+     
+    <header>
+      <h1>Subscription</h1>
+    </header>
+    
+       <div id="visit-counter">
+         <i class="fas fa-eye"></i> <span id="visitor-count">0</span>
+       </div>
+       
+    <div class="clientSelectWrapper">
+      <h2>Select Your Client</h2>
+      <select id="clientSelect">
+        <option value="" selected>Choice a client</option>
+        <option value="hiddify">Hiddify</option>
+        <option value="v2ray">V2Ray</option>
+        <option value="singbox">Singbox</option>
+        <option value="nekobox">Nekobox</option>
+        <option value="karing">karing</option>
+        <option value="clash">Clash</option>
+      </select>
+      <div id="hiddify" class="clientSection" style="display:none;">
+        <div class="clientTitle">
+          <i class="fas fa-cogs"></i>
+          <h3>Hiddify Subs</h3>
+        </div>
+        <select class="sessionSelect" id="hiddifySessions">
+          <option value="" selected>Choice Protocol</option>
+          <option value="warp">Warp & wireguard</option>
+          <option value="v2ray">V2ray</option>
+          <option value="loc">Locations</option>
+        </select>
+        <div class="linksContainer" id="hiddifyLinks"></div>
+      </div>
+      <div id="v2ray" class="clientSection" style="display:none;">
+        <h3>V2Ray Subs</h3>
+        <select class="sessionSelect" id="v2raySessions">
+          <option value="" selected>Choice Protoco</option>
+          <option value="v2ray">V2ray</option>
+          <option value="loc">Location</option>
+          <option value="wire">wireguard</option>
+        </select>
+        <div class="linksContainer" id="v2rayLinks"></div>
+      </div>
+      <div id="singbox" class="clientSection" style="display:none;">
+        <h3>Singbox Subs</h3>
+        <select class="sessionSelect" id="singboxSessions">
+          <option value="" selected>Choice Protoco</option>
+          <option value="warp">Session 1</option>
+          <option value="v2ray">Session 2</option>
+        </select>
+        <div class="linksContainer" id="singboxLinks"></div>
+      </div>
+      <div id="nekobox" class="clientSection" style="display:none;">
+        <h3>Nekobox Subs</h3>
+        <select class="sessionSelect" id="nekoboxSessions">
+          <option value="" selected>Choice Protoco</option>
+          <option value="v2ray">Session 1</option>
+          <option value="loc">Session 2</option>
+          <option value="wire">Session 3</option>
+        </select>
+        <div class="linksContainer" id="nekoboxLinks"></div>
+      </div>
+      <div id="karing" class="clientSection" style="display:none;">
+        <h3>karing Subs</h3>
+        <select class="sessionSelect" id="karingSessions">
+          <option value="" selected>Choice Protoco</option>
+          <option value="warp">Wireguard</option>
+          <option value="v2ray">V2ray</option>
+          <option value="lock">Location</option>
+        </select>
+        <div class="linksContainer" id="karingLinks"></div>
+      </div>
+      <div id="clash" class="clientSection" style="display:none;">
+        <h3>Clash Subs</h3>
+        <select class="sessionSelect" id="clashSessions">
+          <option value="" selected>Choice Protoco</option>
+          <option value="v2ray">V2ray</option>
+          <option value="warp">Warp</option>
+        </select>
+        <div class="linksContainer" id="clashLinks"></div>
+      </div>
+      </div>
+    <div class="stepbox">
+      <h5 class="cssanimation lePushReleaseFromBottom sequence">
+        <div class="steps">
+          <div class="step">
+            <div class="step-icon"></div>
+            <h3>How to import subscription</h3>
+            <button class="btn" onclick="startWalkthrough(1)">Hiddify</button>
+            <button class="btn" onclick="startWalkthrough(2)">V2rayNG </button>
+            <button class="btn" onclick="startWalkthrough(3)">Singbox </button>
+            <button class="btn" onclick="startWalkthrough(4)">Nekobox </button>
+            <button class="btn" onclick="startWalkthrough(5)">Karing </button>
+            <button class="btn" onclick="startWalkthrough(6)">Clash </button>
+            <a href="https://github.com/bepass-org/oblivion/releases" class="btn" target="_blank">Oblivion</a>
+            <a href="https://github.com/Begzar/BegzarApp/releases" class="btn" target="_blank">Begzar</a>
+          </div>
+        </div>
+      </h5>
+    </div>
+    <div id="walkthrough1" class="walkthrough">
+      <div class="walkthrough-content">
+        <div class="walkthrough-step active">
+          <h3> Open the App</h3>
+          <hr>
+          <p>download hiddify and Launch the app</p>
+          <a href="https://github.com/hiddify/hiddify-next/releases" target="_blank" class="btn">Android</a>
+          <a href="http://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532" target="_blank" class="btn">iOS</a>
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 1: Add </h3>
+          <hr>
+          <p>Tap the '+' button to add a new configuration.</p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Hiddify/H1.jpg" alt="Step 1 of final instructions">
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 2: add from clipboard</h3>
+          <hr>
+          <p> click to add form clipboard</p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Hiddify/H2.jpg" alt="Step 2 of final instructions">
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 3: Connect</h3>
+          <hr>
+          <p>Tap the 'Connect' button to secure your connection.</p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Hiddify/H3.jpg" alt="Step 2 of final instructions">
+        </div>
+        <div class="walkthrough-buttons">
+          <button class="btn" onclick="prevStep(1)">
+            < </button>
+              <button class="btn next-btn" onclick="nextStep(1)">></button>
+              <button class="btn" onclick="closeWalkthrough(1)">×</button>
+        </div>
+      </div>
+    </div>
+    <div id="walkthrough2" class="walkthrough">
+      <div class="walkthrough-content">
+        <div class="walkthrough-step active">
+          <h3> Open the App</h3>
+          <hr>
+          <p>download and Launch the app</p>
+           <p>v2rayNG and NikaNG are both alike</p>
+          <a href="https://github.com/2dust/v2rayNG/releases" target="_blank" class="btn">v2rayNG Github</a>
+          <a href="https://play.google.com/store/apps/details?id=com.v2ray.ang&hl=en" target="_blank" class="btn">v2rayNG Google play</a>
+          <a href="https://github.com/mahsanet/NikaNG/releases" target="_blank" class="btn">NikaNG</a>
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 1: Add </h3>
+          <hr>
+          <p>1.Tap '≡' button </p>
+          <p>2.click group and subscription</p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/V2ray/V1.jpg" alt="Step 1 of final instructions">
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 2: import sub</h3>
+          <hr>
+          <p>3.Tap '+' button </p>
+          <p>4.choice name and paste subscription to optical url</p>
+          <p>5.Tap '✓' button </p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/V2ray/V2.jpg" alt="Step 2 of final instructions">
+          <hr>
+          
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 3: Connect</h3>
+          <hr>
+          <p>6.Back to main and Tap '+' button </p>
+          <p>7.Click to update current group and subscription</p>
+          <p>8.Click to Connect</p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/V2ray/V3.jpg" alt="Step 2 of final instructions">
+        </div>
+        <div class="walkthrough-buttons">
+          <button class="btn" onclick="prevStep(2)">
+            < </button>
+              <button class="btn next-btn" onclick="nextStep(2)">></button>
+              <button class="btn" onclick="closeWalkthrough(2)">×</button>
+        </div>
+      </div>
+    </div>
+    <div id="walkthrough3" class="walkthrough">
+      <div class="walkthrough-content">
+        <div class="walkthrough-step active">
+          <h3>Open the App</h3>
+          <hr>
+          <p>Download and Launch the app</p>
+          <a href="https://github.com/SagerNet/sing-box/releases" target="_blank" class="btn">Github</a>
+          <a href="https://play.google.com/store/apps/details?id=io.nekohasekai.sfa&hl=en" target="_blank" class="btn">Google play</a>
+          <a href="https://apps.apple.com/us/app/sing-box-vt/id6673731168" target="_blank" class="btn">Ios</a>
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 1: Add </h3>
+          <hr>
+          <p>1.Tap the '+' button </p>
+          <p>2.Click to create manually</p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Singbox/Sb1.jpg" alt="Step 1 of final instructions">
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 2: import sub</h3>
+          <hr>
+          <p>3.Choice name</p>
+          <p>4.paste link subscription to url</p>
+          <p>5.Click button create</p>
+          <p>6.Click to Connect </p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Singbox/Sb2.jpg" alt="Step 2 of final instructions">
+          <hr>
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 3: Connect</h3>
+          <hr>
+          <p>Finished </p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Singbox/Sb3.jpg" alt="Step 2 of final instructions">
+        </div>
+        <div class="walkthrough-buttons">
+          <button class="btn" onclick="prevStep(3)">
+            < </button>
+              <button class="btn next-btn" onclick="nextStep(3)">></button>
+              <button class="btn" onclick="closeWalkthrough(3)">×</button>
+        </div>
+      </div>
+    </div>
+    <div id="walkthrough4" class="walkthrough">
+      <div class="walkthrough-content">
+        <div class="walkthrough-step active">
+          <h3>Open the App</h3>
+          <hr>
+          <p>Download and Launch the app</p>
+          <a href="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases" target="_blank" class="btn">Github</a>
+          <a href="https://play.google.com/store/apps/details?id=moe.nb4a&hl=en" target="_blank" class="btn">Google play</a>
+          <a href="https://apps.apple.com/us/app/karing/id6450534064?platform=iphone" target="_blank" class="btn">karing Ios</a>
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 1: Add </h3>
+          <hr>
+          <p>1.Tap '≡' button </p>
+          <p>2.Click to group </p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Neko/N1.jpg" alt="Step 1 of final instructions">
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 2: import subscription</h3>
+          <hr>
+          <p>3.Tap '≡+' button </p>
+          <p>4.Choice a name </p>
+          <p>5.Paste subscription to subscription link</p>
+          <p>7.Tap '✓' button </p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Neko/N2.jpg" alt="Step 2 of final instructions">
+          <hr>
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 3: Connect</h3>
+          <hr>
+          <p>Tap the 'Connect' button </p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Neko/N3.jpg" alt="Step 2 of final instructions">
+        </div>
+        <div class="walkthrough-buttons">
+          <button class="btn" onclick="prevStep(4)">
+            < </button>
+              <button class="btn next-btn" onclick="nextStep(4)">></button>
+              <button class="btn" onclick="closeWalkthrough(4)">×</button>
+        </div>
+      </div>
+    </div>
+    <div id="walkthrough5" class="walkthrough">
+      <div class="walkthrough-content">
+        <div class="walkthrough-step active">
+          <h3> Open the App</h3>
+          <hr>
+          <p>Download and Launch the app</p>
+          <a href="https://github.com/KaringX/karing/releases" target="_blank" class="btn">android</a>
+          <a href="https://apps.apple.com/us/app/karing/id6472431552" target="_blank" class="btn">iOS</a>
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 1: Add </h3>
+          <p>1.Tap '+' button </p>
+          <p>2.Click to Add Profile Link</p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Karing/K1.jpg" alt="Step 1 of final instructions">
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 2: import</h3>
+          <hr>
+          <p>3.Choice a name </p>
+          <p>4.Paste subscription to Profile link</p>
+          <p>5.Tap '✓' button </p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Karing/K2.jpg" alt="Step 2 of final instructions">
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 3: Connect</h3>
+          <hr>
+          <p>Tap the 'Connect' button </p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Karing/K3.jpg" alt="Step 2 of final instructions">
+        </div>
+        <div class="walkthrough-buttons">
+          <button class="btn" onclick="prevStep(5)">
+            < </button>
+              <button class="btn next-btn" onclick="nextStep(5)">></button>
+              <button class="btn" onclick="closeWalkthrough(5)">×</button>
+        </div>
+      </div>
+    </div>
+    <div id="walkthrough6" class="walkthrough">
+      <div class="walkthrough-content">
+        <div class="walkthrough-step active">
+          <h3>Open the App</h3>
+          <hr>
+          <p>Download and Launch the app</p>
+          <a href="https://github.com/MetaCubeX/ClashMetaForAndroid/releases" target="_blank" class="btn">clash meta Github</a>
+          <a href="https://github.com/chen08209/FlClash/releases" target="_blank" class="btn">Fl Clash Github</a>
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 1: Add </h3>
+          <hr>
+          <p>1.Click to profile</p>
+          <p>2.Tap '+' button </p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Clash/C1.jpg" alt="Step 1 of final instructions">
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 2: import</h3>
+          <hr>
+          <p>3.Click to Url</p>
+          <p>4.Paste link subscription to Url</p>
+          <p>5.Tap to save icon</p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Clash/C2.jpg" alt="Step 2 of final instructions">
+        </div>
+        <div class="walkthrough-step">
+          <h3>Step 3: Connect</h3>
+          <p>Back to main page </p>
+          <p>Click to running </p>
+          <img src="https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Image/Clash/C3.jpg" alt="Step 2 of final instructions">
+        </div>
+        <div class="walkthrough-buttons">
+          <button class="btn" onclick="prevStep(6)">
+            < </button>
+              <button class="btn next-btn" onclick="nextStep(6)">></button>
+              <button class="btn" onclick="closeWalkthrough(6)">×</button>
+        </div>
+      </div>
+    </div>
+    <div class="clientSelectWrapper">
+      <h3>Tools</h3>
+      <a href="https://darknessm427.github.io/Hiddify-warp/" class="btn" target="_blank">Warp Generator</a>
+      <a href="https://4n0nymou3.github.io/proxy-to-singbox-converter/" class="btn" target="_blank">Config Converter</a>
+      <a href="https://irfreedom.github.io/Ip/" class="btn" target="_blank">My Ip</a>
+      <a href="https://github.com/darknessm427/ESET-Key" class="btn" target="_blank">ESET key</a>
+      <a href="https://github.com/darknessm427/IP_Generator" class="btn" target="_blank">Clean IP</a>
+      <a href="https://t.me/ConfigWireguard" class="btn" target="_blank">Warp Config</a>
+    </div>
+    <div class="logo" onclick="toggleLinks(event)">
+      <img src="https://github.com/user-attachments/assets/32c39ec3-ce17-429c-83ce-4fa9578fdb48" alt="Logo" class="logopic">
+    </div>
+    <div class="social-links" id="socialLinks">
+      <a href="https://t.me/darkness_427" target="_blank" class="telegram">
+        <img src="https://img.icons8.com/?size=100&id=114954&format=png&color=000000" alt="">
+      </a>
+      <a href="https://x.com/mansor427" target="_blank" class="twitter">
+        <img src="https://img.icons8.com/?size=100&id=TJX3x8NCUkFN&format=png&color=000000" alt="">
+      </a>
+      <a href="https://github.com/darknessm427" target="_blank" class="github">
+        <img src="https://img.icons8.com/?size=100&id=52539&format=png&color=000000" alt="">
+      </a>
+    </div>
+    <button class="fab-button" onclick="openPopup()">
+      <i class="fas fa-cat"></i>
+    </button>
+    <div class="popup" id="socialPopup" onclick="closePopup(event)">
+      <div class="popup-content" onclick="event.stopPropagation()">
+        <button class="close-btn" onclick="closePopup(event)">×</button>
+        <h2>تشکر از عزیزانی که زحمت ساب و کانفیگ هارو کشیدن</h2>
+        <p>
+          <a href="https://t.me/F_NiREvil" target="_blank">NiREvil</a>
+          <a href="https://twitter.com/yebekhe" target="_blank">YeBeKhe</a>
+          <a href="https://twitter.com/markpash" target="_blank">Mark Pash</a>
+          <a href="https://twitter.com/amirparsaxs" target="_blank">AmirParsaXs</a>
+          <a href="https://t.me/arshia_mod_fun" target="_blank">عرشیا</a>
+        </p>
+        <hr>
+        <p>
+          <a href="https://t.me/freeebirdss" target="_blank">FreeBird</a>
+          <a href="https://twitter.com/amin_o__o" target="_blank">amin_o__o</a>
+          <a href="https://twitter.com/PsrkGermz" target="_blank">پسرک قرمز</a>
+          <a href="https://t.me/proxyskyy" target="_blank">Sky vpn</a>
+          <a href="https://t.me/arshia_mod_fun" target="_blank">عرشیا</a>
+        </p>
+        <hr>
+        <p>
+          <a href="https://github.com/4n0nymou3" target="_blank">4n0nymou3</a>
+          <a href="https://twitter.com/iSegar0" target="_blank">iSegar0</a>
+          <a href="https://t.me/FREE2CONFIG" target="_blank">Mostafa safari</a>
+          <a href="https://twitter.com/seramo_ir" target="_blank">Seramo</a>
+          <a href="https://twitter.com/mahsanet" target="_blank">Mahsanet </a>
+        </p>
+        <hr>
+        <p>
+          <a href="https://t.me/hamedvpns" target="_blank">нαмє∂ ρєγναѕι</a>
+          <a href="https://github.com/MhdiTaheri" target="_blank">Mhdi Taheri</a>
+          <a href="https://twitter.com/bia_pain_bache" target="_blank">Bpb</a>
+          <a href="https://twitter.com/Eagle_1157" target="_blank">🌈🅺🅸🅰️🅽</a>
+          <a href="https://t.me/unlocked_worlld" target="_blank">Dani</a>
+        </p>
+        <hr>
+        <p>
+          <a href="https://twitter.com/fard1627" target="_blank">Bardia Fa</a>
+          <a href="soroushmirzaei.github.io" target="_blank">Soroush Mirzaei</a>
+          <a href="https://twitter.com/coldwater_10" target="_blank">Coldwater</a>
+          <a href="FreeVPNHomes" target="_blank">VendettaForFreedom</a>
+          <a href="https://t.me/joinNASNET" target="_blank">NasNet </a>
+        </p>
+        <hr>
+        <p>
+          <a href="https://t.me/azadi_az_inja_migzare" target="_blank">آزادی از اینجا میگذره</a>
+          <a href="https://twitter.com/GhostOfSarina" target="_blank">GhostOfSarina</a>
+          <a href="https://t.me/bird_xray" target="_blank">Bird Xray</a>
+          <a href="https://t.me/FreeVPNHomes" target="_blank">FreeVPNHomes</a>
+          <a href="https://twitter.com/ircfspace" target="_blank">IRCF</a>
+        </p>
+        <hr>
+        <p>
+          <a href="https://twitter.com/Aminiyt1" target="_blank">AminiYT</a>
+          <a href="https://twitter.com/Freedom_Guard_N" target="_blank">گارد آزادی</a>
+          <a href="https://twitter.com/BegzarProject" target="_blank">Begzar</a>
+          <a href="https://t.me/proxy427" target="_blank">Proxy</a>
+          <a href="https://t.me/ConfigWireguard" target="_blank">Wireguard</a>
+        </p>
+        <hr>
+        <div class="suggestion">
+          <p> اگر ساب خوبی دارید، لطفاً از طریق تلگرام و ایکس معرفی کنید تا به لیست اضافه کنم</p>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <p>ÐΛɌ₭ᑎΞ𐒡𐒡🗽𓄂𓆃 </p>
+    </foot>
+    
+    <script>
+      // JavaScript to handle the visitor count logic
+      let visitorCount = localStorage.getItem('visitorCount') || 0;
+      visitorCount = parseInt(visitorCount) + 1;
+      localStorage.setItem('visitorCount', visitorCount);
+    
+      // Update the visitor count on the page
+      document.getElementById('visitor-count').textContent = visitorCount;
+    
+      // Show the counter with an animation
+      setTimeout(() => {
+        document.getElementById('visit-counter').style.opacity = 1;
+      }, 500);
+    </script>
+    
+    <script>
+      const clientLinks = {
+            "hiddify": {
+                "warp": [
+                    {name: "warp+proton", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/Warp/wp"},
+                    {name: "Warp IPv4", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/Warp/IPv4"},
+                    {name: "Warp IPv6", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/Warp/IPv6"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/darknessm427/WoW/main/warp2.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/darknessm427/WoW/main/warp.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/Warp2"},
+                    {name: "warp under v2", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/Warp"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/arshiacomplus/WoW-fix/main/warp2.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/arshiacomplus/WoW-fix/main/sing-box-hiddify.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/arshiacomplus/WoW-fix/main/warp2.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/ByteMysticRogue/Hiddify-Warp/main/warp.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/4n0nymou3/wg-config-fetcher/refs/heads/main/configs/wireguard_configs.txt"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/4n0nymou3/auto-warp-config/refs/heads/main/config.txt"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/WarpOnWarp.json"},
+                    {name: "warp + Proton", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/%F0%9F%94%97warp-proton"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/NiREvil/vless/main/sing-box.json"},
+                    {name: "Windscribe", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/Windscribe%20on%20H2%20(hiddify%20outbound)"},
+                    {name: "Windscribe Poroton Hysteria", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/All%20%20Warp%20Windscribe%20Poroton%20Hysteria"},
+                    {name: "warp dns clean", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/Proton%20ON%20WARP%2B%20DNS%20Clean"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/ByteMysticRogue/Hiddify-Warp/main/warp.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/WarpOnWarp.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/amirparsaxs/-/refs/heads/main/Sub.text505"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/amirparsaxs/Warp-/refs/heads/main/Sub_text_best_ping"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/amirparsaxs/Xs/refs/heads/main/Sub.text_warp"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/amirparsaxs/Amirparsaxss/refs/heads/main/Sub.text98"},
+                    {name: "warp + Proton", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/%F0%9F%94%97warp-proton"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/NiREvil/vless/main/sing-box.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Warp/IP6"},
+                    {name: "Windscribe", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/Windscribe%20on%20H2%20(hiddify%20outbound)"}
+                ],
+                "v2ray": [
+                    {name: "hysteria2", link: "https://singbox-freevpnhomes-subscription.meshkintaj.homes"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/T,H"},
+                    {name: "reality", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/Reality"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/Vless"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/T,H"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/SS"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/4n0nymou3/multi-proxy-config-fetcher/refs/heads/main/configs/proxy_configs.txt"},
+                    {name: "vless & vmess", link: "https://raw.githubusercontent.com/xc0000e9/deatnote/main/Hiddify-next.fragment"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/vless.html"},
+                    {name: "vmess", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/vmess.html"},
+                    {name: "trojan", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/trojan.html"},
+                    {name: "tuic", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/tuic.html"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/hy2.html"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/ss.html"},
+                    {name: "hysteria2", link: "https://hiddify-freevpnhomes-subscription.meshkintaj.homes"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_1.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_2.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_3.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_2.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_3.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/amirparsaxs/Javid-shah/refs/heads/main/Sub.text"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/birdxray/birdxray/refs/heads/main/birdxray"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/azadiazinjamigzare/Service/main/Sub"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/Ss"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2ss"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/skywrt/v2ray-Collector/master/v2ray"},
+                    {name: "Juicity ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/juicity"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/hysteria"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/tuic"},
+                    {name: "Reality ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/reality"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vless"},
+                    {name: "Vmess ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vmess"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/trojan"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/shadowsocks"},
+                    {name: "Mixed ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/splitted/mixed"},
+                    {name: "tls", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/security/tls"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/MhdiTaheri/V2rayCollector/main/sub/ss"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/MhdiTaheri/V2rayCollector/main/sub/trojan"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/MhdiTaheri/V2rayCollector/main/sub/vless"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/hysteria2.txt"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/tuic.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list5.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list6.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list7.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list8.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/ss_iran.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/trojan_iran.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/vmess_iran.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/vless_iran.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/mixed_iran.txt"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/hysteria2.txt"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/tuic.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/mix.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/ss_iran.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/trojan_iran.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/vmess_iran.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/vless_iran.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/mixed_iran.txt"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/hysteria2.txt"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/tuic.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/SamanGho/v2ray_collector/refs/heads/main/v2tel_links2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/SamanGho/v2ray_collector/refs/heads/main/v2tel_links1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/SamanGho/v2ray_collector/refs/heads/main/base64"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/mix.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/mix.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64vless.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64mix.txt"},
+                    {name: "Shadowsocks ", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "mix", link: "https://github.com/skywrt/v2ray-configs/raw/main/All_Configs_Sub.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub5.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub6.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub5.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub6.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub7.txt"}
+                ],
+                "loc": [
+                    {name: "usa", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/us/mixed"},
+                    {name: "usa", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/United%20States/config.txt"},
+                    {name: "United Kingdom", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/gb/mixed"},
+                    {name: "United Kingdom", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/United%20Kingdom/config.txt"},
+                    {name: "Türkiye", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/tr/mixed"},
+                    {name: "russia", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Russia/config.txt"},
+                    {name: "Italy", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/it/mixed"},
+                    {name: "Italy", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Italy/config.txt"},
+                    {name: "Germany", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/de/mixed"},
+                    {name: "Germany", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Germany/config.txt"},
+                    {name: "France", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/fr/mixed"},
+                    {name: "France", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/France/config.txt"},
+                    {name: "Armenia", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/am/mixed"},
+                    {name: "Netherlands", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/nl/mixed"},
+                    {name: "Netherlands", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Netherlands/config.txt"},
+                    {name: "Australia", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/au/mixed"},
+                    {name: "Brazil", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/br/mixed"},
+                    {name: "Bahrain", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/bh/mixed"},
+                    {name: "China", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/cn/mixed"},
+                    {name: "Canada", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/ca/mixed"},
+                    {name: "Canada", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Canada/config.txt"},
+                    {name: "Finland", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/fi/mixed"},
+                    {name: "Finland", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Finland/config.txt"},
+                    {name: "India", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/in/mixed"},
+                    {name: "Japan", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/jp/mixed"},
+                    {name: "Spain", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/es/mixed"},
+                    {name: "Singapore", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/sg/mixed"},
+                    {name: "Poland", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/pl/mixed"},
+                    {name: "United Arab Emirates", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/ae/mixed"},
+                    {name: "United Arab Emirates", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/United%20Arab%20Emirates/config.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_2.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_3.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_2.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_3.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/birdxray/birdxray/refs/heads/main/birdxray"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/azadiazinjamigzare/Service/main/Sub"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/Ss"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2ss"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "Juicity ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/juicity"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/hysteria"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/tuic"},
+                    {name: "Reality ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/reality"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vless"},
+                    {name: "Vmess ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vmess"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/trojan"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/shadowsocks"},
+                    {name: "Mixed ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/splitted/mixed"},
+                    {name: "tls", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/security/tls"}
+                ]
+            },
+            "v2ray": {
+                "v2ray": [
+                    {name: "hysteria2", link: "https://singbox-freevpnhomes-subscription.meshkintaj.homes"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/T,H"},
+                    {name: "reality", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/Reality"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/Vless"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/T,H"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/SS"},
+                    {name: "vless & vmess", link: "https://raw.githubusercontent.com/xc0000e9/deatnote/main/Hiddify-next.fragment"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/vless.html"},
+                    {name: "vmess", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/vmess.html"},
+                    {name: "trojan", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/trojan.html"},
+                    {name: "tuic", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/tuic.html"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/hy2.html"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/ss.html"},
+                    {name: "hysteria2", link: "https://hiddify-freevpnhomes-subscription.meshkintaj.homes"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_1.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_2.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_3.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_2.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_3.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/birdxray/birdxray/refs/heads/main/birdxray"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/azadiazinjamigzare/Service/main/Sub"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/Ss"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2ss"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/skywrt/v2ray-Collector/master/v2ray"},
+                    {name: "Juicity ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/juicity"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/hysteria"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/tuic"},
+                    {name: "Reality ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/reality"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vless"},
+                    {name: "Vmess ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vmess"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/trojan"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/shadowsocks"},
+                    {name: "Mixed ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/splitted/mixed"},
+                    {name: "tls", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/security/tls"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/MhdiTaheri/V2rayCollector/main/sub/ss"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/MhdiTaheri/V2rayCollector/main/sub/trojan"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/MhdiTaheri/V2rayCollector/main/sub/vless"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/hysteria2.txt"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/tuic.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list5.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list6.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list7.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list8.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/ss_iran.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/trojan_iran.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/vmess_iran.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/vless_iran.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/mixed_iran.txt"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/hysteria2.txt"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/tuic.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/mix.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/ss_iran.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/trojan_iran.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/vmess_iran.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/vless_iran.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/mixed_iran.txt"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/hysteria2.txt"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/tuic.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/SamanGho/v2ray_collector/refs/heads/main/v2tel_links2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/SamanGho/v2ray_collector/refs/heads/main/v2tel_links1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/SamanGho/v2ray_collector/refs/heads/main/base64"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/mix.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/mix.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64vless.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64mix.txt"},
+                    {name: "Shadowsocks ", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "mix", link: "https://github.com/skywrt/v2ray-configs/raw/main/All_Configs_Sub.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub5.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub6.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub5.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub6.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub7.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/hamedp-71/openproxylist/refs/heads/main/V2RAY.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/hamedp-71/openproxylist/refs/heads/main/V2RAY_BASE64.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/hamedp-71/openproxylist/refs/heads/main/V2RAY_RAW.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub6.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub7.txt"}
+                ],
+                "loc": [
+                    {name: "usa", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/us/mixed"},
+                    {name: "usa", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/United%20States/config.txt"},
+                    {name: "United Kingdom", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/gb/mixed"},
+                    {name: "United Kingdom", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/United%20Kingdom/config.txt"},
+                    {name: "Türkiye", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/tr/mixed"},
+                    {name: "russia", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Russia/config.txt"},
+                    {name: "Italy", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/it/mixed"},
+                    {name: "Italy", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Italy/config.txt"},
+                    {name: "Germany", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/de/mixed"},
+                    {name: "Germany", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Germany/config.txt"},
+                    {name: "France", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/fr/mixed"},
+                    {name: "France", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/France/config.txt"},
+                    {name: "Armenia", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/am/mixed"},
+                    {name: "Netherlands", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/nl/mixed"},
+                    {name: "Netherlands", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Netherlands/config.txt"},
+                    {name: "Australia", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/au/mixed"},
+                    {name: "Brazil", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/br/mixed"},
+                    {name: "Bahrain", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/bh/mixed"},
+                    {name: "China", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/cn/mixed"},
+                    {name: "Canada", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/ca/mixed"},
+                    {name: "Canada", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Canada/config.txt"},
+                    {name: "Finland", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/fi/mixed"},
+                    {name: "Finland", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Finland/config.txt"},
+                    {name: "India", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/in/mixed"},
+                    {name: "Japan", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/jp/mixed"},
+                    {name: "Spain", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/es/mixed"},
+                    {name: "Singapore", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/sg/mixed"},
+                    {name: "Poland", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/pl/mixed"},
+                    {name: "United Arab Emirates", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/ae/mixed"},
+                    {name: "United Arab Emirates", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/United%20Arab%20Emirates/config.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_2.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_3.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_2.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_3.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/birdxray/birdxray/refs/heads/main/birdxray"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/azadiazinjamigzare/Service/main/Sub"},
+                    {name: "w arcane", link: "https://arcane.victoriacross.workers.dev"},
+                    {name: "w harmony", link: "https://harmony.victoriacross.workers.dev"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/Ss"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2ss"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "Juicity ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/juicity"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/hysteria"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/tuic"},
+                    {name: "Reality ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/reality"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vless"},
+                    {name: "Vmess ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vmess"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/trojan"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/shadowsocks"},
+                    {name: "Mixed ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/splitted/mixed"},
+                    {name: "tls", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/security/tls"}
+                ],
+                "wire": [
+                    {name: "warp nikaNG & mahsaNG", link: "https://raw.githubusercontent.com/arshiacomplus/WoW-fix/main/Xray-WoW.json"},
+                    {name: "warp nikaNG & mahsaNG ipv4", link: "https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Warp/Nikav4"},
+                    {name: "warp nikaNG & mahsaNG ipv6", link: "https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Warp/Nikav6"},
+                    {name: "warp nikaNG & mahsaNG", link: "https://raw.githubusercontent.com/darknessm427/WoW/refs/heads/main/Xray-WoW.json"},
+                    {name: "warp nikaNG & mahsaNG", link: "https://raw.githubusercontent.com/arshiacomplus/WoW-fix/refs/heads/main/Xray-WoW.json"}
+
+                ]
+            },
+            "singbox": {
+                "warp": [
+                    {name: "warp", link: "https://raw.githubusercontent.com/arshiacomplus/WoW-fix/refs/heads/main/sing-box.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/arshiacomplus/WoW-fix/refs/heads/main/sing-box-hiddify.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/darknessm427/WoW/refs/heads/main/sing-box.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/darknessm427/WoW/refs/heads/main/sing-box-hiddify.json"}
+                ],
+                "v2ray": [
+                    {name: "mix", link: "https://raw.githubusercontent.com/hamedp-71/Json1/refs/heads/main/HP.json"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/hamedp-71/hp-json/refs/heads/main/Xs_Unlimite.json"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/4n0nymou3/multi-proxy-config-fetcher/refs/heads/main/configs/singbox_configs.json"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/IranianCypherpunks/SingBox/main/Sub"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/sinabigo/Sing-box/main/@sinabigo"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/sinabigo/Sing-box/main/@sinabigo_5"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/azadiazinjamigzare/Service/main/Sub"}
+                ]
+            },
+            "nekobox": {
+                "v2ray": [
+                    {name: "hysteria2", link: "https://singbox-freevpnhomes-subscription.meshkintaj.homes"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/T,H"},
+                    {name: "reality", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/Reality"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/Vless"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/T,H"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/SS"},
+                    {name: "vless & vmess", link: "https://raw.githubusercontent.com/xc0000e9/deatnote/main/Hiddify-next.fragment"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/vless.html"},
+                    {name: "vmess", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/vmess.html"},
+                    {name: "trojan", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/trojan.html"},
+                    {name: "tuic", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/tuic.html"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/hy2.html"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/ss.html"},
+                    {name: "hysteria2", link: "https://hiddify-freevpnhomes-subscription.meshkintaj.homes"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_1.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_2.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_3.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_2.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_3.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/birdxray/birdxray/refs/heads/main/birdxray"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/azadiazinjamigzare/Service/main/Sub"},
+                    {name: "w arcane", link: "https://arcane.victoriacross.workers.dev"},
+                    {name: "w harmony", link: "https://harmony.victoriacross.workers.dev"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/Ss"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2ss"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/skywrt/v2ray-Collector/master/v2ray"},
+                    {name: "Juicity ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/juicity"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/hysteria"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/tuic"},
+                    {name: "Reality ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/reality"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vless"},
+                    {name: "Vmess ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vmess"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/trojan"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/shadowsocks"},
+                    {name: "Mixed ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/splitted/mixed"},
+                    {name: "tls", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/security/tls"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/MhdiTaheri/V2rayCollector/main/sub/ss"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/MhdiTaheri/V2rayCollector/main/sub/trojan"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/MhdiTaheri/V2rayCollector/main/sub/vless"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/hysteria2.txt"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/tuic.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list5.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list6.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list7.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list8.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/ss_iran.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/trojan_iran.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/vmess_iran.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/vless_iran.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/mixed_iran.txt"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/hysteria2.txt"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/tuic.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/mix.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/ss_iran.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/trojan_iran.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/vmess_iran.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/vless_iran.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/mixed_iran.txt"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/hysteria2.txt"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/tuic.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/SamanGho/v2ray_collector/refs/heads/main/v2tel_links2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/SamanGho/v2ray_collector/refs/heads/main/v2tel_links1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/SamanGho/v2ray_collector/refs/heads/main/base64"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/mix.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/mix.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64vless.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64mix.txt"},
+                    {name: "Shadowsocks ", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "mix", link: "https://github.com/skywrt/v2ray-configs/raw/main/All_Configs_Sub.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub5.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub6.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub5.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub6.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub7.txt"}
+                ],
+                "loc": [
+                    {name: "usa", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/us/mixed"},
+                    {name: "usa", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/United%20States/config.txt"},
+                    {name: "United Kingdom", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/gb/mixed"},
+                    {name: "United Kingdom", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/United%20Kingdom/config.txt"},
+                    {name: "Türkiye", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/tr/mixed"},
+                    {name: "russia", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Russia/config.txt"},
+                    {name: "Italy", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/it/mixed"},
+                    {name: "Italy", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Italy/config.txt"},
+                    {name: "Germany", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/de/mixed"},
+                    {name: "Germany", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Germany/config.txt"},
+                    {name: "France", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/fr/mixed"},
+                    {name: "France", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/France/config.txt"},
+                    {name: "Armenia", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/am/mixed"},
+                    {name: "Netherlands", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/nl/mixed"},
+                    {name: "Netherlands", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Netherlands/config.txt"},
+                    {name: "Australia", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/au/mixed"},
+                    {name: "Brazil", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/br/mixed"},
+                    {name: "Bahrain", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/bh/mixed"},
+                    {name: "China", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/cn/mixed"},
+                    {name: "Canada", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/ca/mixed"},
+                    {name: "Canada", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Canada/config.txt"},
+                    {name: "Finland", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/fi/mixed"},
+                    {name: "Finland", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Finland/config.txt"},
+                    {name: "India", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/in/mixed"},
+                    {name: "Japan", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/jp/mixed"},
+                    {name: "Spain", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/es/mixed"},
+                    {name: "Singapore", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/sg/mixed"},
+                    {name: "Poland", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/pl/mixed"},
+                    {name: "United Arab Emirates", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/ae/mixed"},
+                    {name: "United Arab Emirates", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/United%20Arab%20Emirates/config.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_2.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_3.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_2.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_3.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/birdxray/birdxray/refs/heads/main/birdxray"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/azadiazinjamigzare/Service/main/Sub"},
+                    {name: "w arcane", link: "https://arcane.victoriacross.workers.dev"},
+                    {name: "w harmony", link: "https://harmony.victoriacross.workers.dev"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/Ss"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2ss"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "Juicity ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/juicity"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/hysteria"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/tuic"},
+                    {name: "Reality ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/reality"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vless"},
+                    {name: "Vmess ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vmess"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/trojan"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/shadowsocks"},
+                    {name: "Mixed ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/splitted/mixed"},
+                    {name: "tls", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/security/tls"}
+                ],
+                "wire": [
+                    {name: "bepass yoosef", link: "https://raw.githubusercontent.com/darknessm427/Sub/refs/heads/main/Bepass/U3F"}
+                ]
+            },
+            "karing": {
+                "warp": [
+                    {name: "warp+proton", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/Warp/wp"},
+                    {name: "Warp IPv4", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/Warp/IPv4"},
+                    {name: "Warp IPv6", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/Warp/IPv6"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/darknessm427/WoW/main/warp2.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/darknessm427/WoW/main/warp.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/Warp2"},
+                    {name: "warp under v2", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/Warp"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/arshiacomplus/WoW-fix/main/warp2.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/arshiacomplus/WoW-fix/main/sing-box-hiddify.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/arshiacomplus/WoW-fix/main/warp2.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/ByteMysticRogue/Hiddify-Warp/main/warp.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/WarpOnWarp.json"},
+                    {name: "warp + Proton", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/%F0%9F%94%97warp-proton"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/NiREvil/vless/main/sing-box.json"},
+                    {name: "Windscribe", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/Windscribe%20on%20H2%20(hiddify%20outbound)"},
+                    {name: "Windscribe Poroton Hysteria", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/All%20%20Warp%20Windscribe%20Poroton%20Hysteria"},
+                    {name: "warp dns clean", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/Proton%20ON%20WARP%2B%20DNS%20Clean"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/ByteMysticRogue/Hiddify-Warp/main/warp.json"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/WarpOnWarp.json"},
+                    {name: "warp + Proton", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/%F0%9F%94%97warp-proton"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/NiREvil/vless/main/sing-box.json"},
+                    {name: "Windscribe", link: "https://raw.githubusercontent.com/NiREvil/vless/main/hiddify/Windscribe%20on%20H2%20(hiddify%20outbound)"}
+                ],
+                "v2ray": [
+                    {name: "hysteria2", link: "https://singbox-freevpnhomes-subscription.meshkintaj.homes"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/T,H"},
+                    {name: "reality", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/Reality"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/Vless"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/T,H"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/SS"},
+                    {name: "vless & vmess", link: "https://raw.githubusercontent.com/xc0000e9/deatnote/main/Hiddify-next.fragment"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/vless.html"},
+                    {name: "vmess", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/vmess.html"},
+                    {name: "trojan", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/trojan.html"},
+                    {name: "tuic", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/tuic.html"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/hy2.html"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/ss.html"},
+                    {name: "hysteria2", link: "https://hiddify-freevpnhomes-subscription.meshkintaj.homes"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_1.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_2.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_3.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_2.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_3.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/birdxray/birdxray/refs/heads/main/birdxray"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/azadiazinjamigzare/Service/main/Sub"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/Ss"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2ss"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/skywrt/v2ray-Collector/master/v2ray"},
+                    {name: "Juicity ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/juicity"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/hysteria"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/tuic"},
+                    {name: "Reality ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/reality"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vless"},
+                    {name: "Vmess ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vmess"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/trojan"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/shadowsocks"},
+                    {name: "Mixed ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/splitted/mixed"},
+                    {name: "tls", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/security/tls"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/MhdiTaheri/V2rayCollector/main/sub/ss"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/MhdiTaheri/V2rayCollector/main/sub/trojan"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/raw/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/MhdiTaheri/V2rayCollector/main/sub/vless"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/hysteria2.txt"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/tuic.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list5.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list6.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list7.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Config%20list8.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/ss_iran.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/trojan_iran.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/vmess_iran.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/vless_iran.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorVpnclashfa/main/mixed_iran.txt"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/hysteria2.txt"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/tuic.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/mix.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/ss_iran.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/trojan_iran.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/vmess_iran.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/vless_iran.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2rayCollectorLire/main/mixed_iran.txt"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/hysteria2.txt"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/tuic.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/SamanGho/v2ray_collector/refs/heads/main/v2tel_links2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/SamanGho/v2ray_collector/refs/heads/main/v2tel_links1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/SamanGho/v2ray_collector/refs/heads/main/base64"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Splitted-By-Protocol/mix.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Splitted-By-Protocol/mix.txt"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64ss.txt"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64trojan.txt"},
+                    {name: "Vmess", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64vmess.txt"},
+                    {name: "Vless", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64vless.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/Kwinshadow/TelegramV2rayCollector/main/sublinks/b64mix.txt"},
+                    {name: "Shadowsocks ", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/ss.txt"},
+                    {name: "Trojan ", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/trojan.txt"},
+                    {name: "Vmess", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/vmess.txt"},
+                    {name: "Vless", link: "https://github.com/skywrt/v2ray-configs/raw/main/Splitted-By-Protocol/vless.txt"},
+                    {name: "mix", link: "https://github.com/skywrt/v2ray-configs/raw/main/All_Configs_Sub.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub5.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Config/main/Sub6.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub1.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub2.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub3.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub4.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub5.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub6.txt"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/coldwater-10/V2ray-Configs/main/Sub7.txt"}
+                ],
+                "loc": [
+                    {name: "usa", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/us/mixed"},
+                    {name: "usa", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/United%20States/config.txt"},
+                    {name: "United Kingdom", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/gb/mixed"},
+                    {name: "United Kingdom", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/United%20Kingdom/config.txt"},
+                    {name: "Türkiye", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/tr/mixed"},
+                    {name: "russia", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Russia/config.txt"},
+                    {name: "Italy", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/it/mixed"},
+                    {name: "Italy", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Italy/config.txt"},
+                    {name: "Germany", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/de/mixed"},
+                    {name: "Germany", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Germany/config.txt"},
+                    {name: "France", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/fr/mixed"},
+                    {name: "France", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/France/config.txt"},
+                    {name: "Armenia", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/am/mixed"},
+                    {name: "Netherlands", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/nl/mixed"},
+                    {name: "Netherlands", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Netherlands/config.txt"},
+                    {name: "Australia", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/au/mixed"},
+                    {name: "Brazil", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/br/mixed"},
+                    {name: "Bahrain", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/bh/mixed"},
+                    {name: "China", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/cn/mixed"},
+                    {name: "Canada", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/ca/mixed"},
+                    {name: "Canada", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Canada/config.txt"},
+                    {name: "Finland", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/fi/mixed"},
+                    {name: "Finland", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/Finland/config.txt"},
+                    {name: "India", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/in/mixed"},
+                    {name: "Japan", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/jp/mixed"},
+                    {name: "Spain", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/es/mixed"},
+                    {name: "Singapore", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/sg/mixed"},
+                    {name: "Poland", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/pl/mixed"},
+                    {name: "United Arab Emirates", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/countries/ae/mixed"},
+                    {name: "United Arab Emirates", link: "https://raw.githubusercontent.com/Epodonios/bulk-xray-v2ray-vless-vmess-...-configs/main/sub/United%20Arab%20Emirates/config.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_2.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_3.txt"},
+                    {name: "mci", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_2.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_3.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_4.txt"},
+                    {name: "mtn", link: "https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/birdxray/birdxray/refs/heads/main/birdxray"},
+                    {name: "hysteria2", link: "https://raw.githubusercontent.com/azadiazinjamigzare/Service/main/Sub"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/Ss"},
+                    {name: "shadowsocks", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2ss"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/Sub/main/V2mix"},
+                    {name: "Juicity ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/juicity"},
+                    {name: "Hysteria ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/hysteria"},
+                    {name: "Tuic ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/tuic"},
+                    {name: "Reality ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/reality"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vless"},
+                    {name: "Vmess ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vmess"},
+                    {name: "Trojan ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/trojan"},
+                    {name: "Shadowsocks ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/shadowsocks"},
+                    {name: "Mixed ", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/splitted/mixed"},
+                    {name: "tls", link: "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/security/tls"}
+                ]
+            },
+            "clash": {
+                "v2ray": [
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/SingboxSub/master/release/Meta/meta-ir.yaml"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/darknessm427/SingboxSub/master/release/Meta/meta-ir-sfw.yaml"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/skywrt/v2ray-Collector/master/clash.yaml"},
+                    {name: "mahsa sub mci", link: "https://raw.githubusercontent.com/coldwater-10/Vpnclashfa/refs/heads/main/free-mihomo-sub/MahsaFreeConfig-mci.yaml"},
+                    {name: "mahsa sub mtn", link: "https://raw.githubusercontent.com/coldwater-10/Vpnclashfa/refs/heads/main/free-mihomo-sub/MahsaFreeConfig-mtn.yaml"},
+                    {name: "V2Hub3_reality", link: "https://raw.githubusercontent.com/10ium/MihomoSaz/main/Sublist/10ium/V2Hub3_reality.yaml"},
+                    {name: "ss", link: "https://raw.githubusercontent.com/10ium/MihomoSaz/main/Sublist/10ium/V2Hub3_shadowsocks.yaml"},
+                    {name: "trojan", link: "https://raw.githubusercontent.com/10ium/MihomoSaz/main/Sublist/10ium/V2Hub3_trojan.yaml"},
+                    {name: "vmess", link: "https://raw.githubusercontent.com/10ium/MihomoSaz/main/Sublist/10ium/V2Hub3_vmess.yaml"},
+                    {name: "mix", link: "https://raw.githubusercontent.com/10ium/V2RayAggregator/refs/heads/master/Eternity.yml"},
+                    {name: "ss", link: "https://raw.githubusercontent.com/10ium/MihomoSaz/main/Sublist/10ium/ss_iran.yaml"},
+                    {name: "trojan", link: "https://raw.githubusercontent.com/10ium/MihomoSaz/main/Sublist/10ium/trojan_iran.yaml"},
+                    {name: "vmess", link: "https://raw.githubusercontent.com/10ium/MihomoSaz/main/Sublist/10ium/vmess_iran.yaml"},
+                    {name: "ss", link: "https://raw.githubusercontent.com/hamedp-71/c-1.18-2.18/refs/heads/main/hp.yaml"},
+                    {name: "vless", link: "https://raw.githubusercontent.com/hamedp-71/c-1.17-2.17/refs/heads/main/hp.yaml"},
+                    {name: "ss", link: "https://raw.githubusercontent.com/10ium/MihomoSaz/main/Sublist/10ium/ss_iran.yaml"},
+                    {name: "trojan", link: "https://raw.githubusercontent.com/10ium/MihomoSaz/main/Sublist/10ium/trojan_iran.yaml"},
+                    {name: "mahsa sub", link: "https://raw.githubusercontent.com/coldwater-10/Vpnclashfa/refs/heads/main/free-mihomo-sub/MahsaFreeConfig-mci.yaml"}
+                ],
+                "warp": [
+                    {name: "warp auto", link: "https://raw.githubusercontent.com/darknessm427/WoW/refs/heads/main/clash-wg.yml"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/hamedp-71/c-2.17-3.17/refs/heads/main/hp.yaml"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/hamedp-71/Clash_New/refs/heads/main/hp.yaml"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/hamedp-71/clash-m.k.z/refs/heads/main/hp.yaml"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/hamedp-71/c-2.13-5.13/refs/heads/main/hp.yaml"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/hamedp-71/c-2.14-3.14/refs/heads/main/hp.yaml"},
+                    {name: "warp", link: "https://zaya.io/M_K_Z_Clash_warp"},
+                    {name: "warp", link: "https://raw.githubusercontent.com/hamedp-71/c-2.13-3.13/refs/heads/main/hp.yaml"}
+                ]
+            }
+        };
+  
+      function loadLinks(client, session) {
+        const container = document.getElementById(client + 'Links');
+        const sessionLinks = clientLinks[client][session];
+        container.innerHTML = ''; 
+        sessionLinks.forEach((linkObj, index) => { // اضافه کردن index برای شناسایی یکتا
+          const linkCard = document.createElement('div');
+          linkCard.className = 'linkCard';
+          linkCard.innerHTML = `
+            <div class="link-info">
+                <span>${linkObj.name}</span>
+                <a href="${linkObj.link}" target="_blank">${linkObj.link}</a>
+                <div class="buttonContainer">
+                    <button class="copyButton" onclick="copyLink('${linkObj.link}', this)">
+                        <i class="fas fa-copy"></i>
+                        <span class="checkmark">✔</span>
+                    </button>
+                    <button class="qrButton" onclick="toggleQrCode(this, '${linkObj.link}', ${index})"> <i class="fas fa-qrcode"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="qrCodeContainer-${client}-${session}-${index}" class="qrCodeContainer"> <img src="" alt="QR Code">
+            </div>
+          `;
+          container.appendChild(linkCard);
+        });
+        container.style.display = 'block';
+      }
+  
+      document.getElementById('clientSelect').addEventListener('change', function() {
+        const selectedClient = this.value;
+        document.querySelectorAll('.clientSection').forEach(section => {
+          section.style.display = 'none';
+        });
+        if (selectedClient) {
+          document.getElementById(selectedClient).style.display = 'block';
+          // مخفی کردن لینک‌های قبلی هنگام تغییر کلاینت
+          document.querySelectorAll('.linksContainer').forEach(container => {
+              container.style.display = 'none';
+              // مخفی کردن QR کدهای نمایش داده شده
+              container.querySelectorAll('.qrCodeContainer').forEach(qrDiv => {
+                  qrDiv.style.display = 'none';
+              });
+          });
+          // ریست کردن سلکتور پروتکل
+           document.querySelectorAll('.sessionSelect').forEach(select => {
+              select.value = "";
+          });
+
+        }
+      });
+      document.querySelectorAll('.sessionSelect').forEach(selectElement => {
+        selectElement.addEventListener('change', function() {
+          const client = this.id.replace('Sessions', '');
+          const session = this.value;
+          // مخفی کردن QR کدهای نمایش داده شده در بخش فعلی قبل از بارگذاری لینک‌های جدید
+           document.getElementById(client + 'Links').querySelectorAll('.qrCodeContainer').forEach(qrDiv => {
+               qrDiv.style.display = 'none';
+           });
+          if (session) {
+            loadLinks(client, session);
+          } else {
+            document.getElementById(client + 'Links').style.display = 'none';
+          }
+        });
+      });
+      function copyLink(link, button) {
+        navigator.clipboard.writeText(link).then(() => {
+          button.classList.add('clicked'); 
+          setTimeout(() => {
+            button.classList.remove('clicked');
+          }, 2000);
+        });
+      }
+      
+      // تابع جدید برای نمایش/مخفی کردن QR کد
+      function toggleQrCode(button, link, index) {
+           const linkCard = button.closest('.linkCard'); // پیدا کردن linkCard والد
+           const qrCodeContainer = linkCard.querySelector('.qrCodeContainer'); // پیدا کردن qrCodeContainer داخل linkCard
+           const qrImage = qrCodeContainer.querySelector('img');
+
+           // مخفی کردن تمام QR کدهای دیگر در صفحه
+           document.querySelectorAll('.qrCodeContainer').forEach(qrDiv => {
+               if (qrDiv !== qrCodeContainer) {
+                   qrDiv.style.display = 'none';
+               }
+           });
+
+           if (qrCodeContainer.style.display === 'none' || qrCodeContainer.style.display === '') {
+               const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(link)}`;
+               qrImage.src = qrImageUrl;
+               qrCodeContainer.style.display = 'block';
+           } else {
+               qrCodeContainer.style.display = 'none';
+               qrImage.src = ''; // پاک کردن src هنگام مخفی شدن
+           }
+       }
+      
+      // تابع closeQrPopup حذف شد
+      /*
+      function closeQrPopup() {
+        document.getElementById('qrPopup').style.display = 'none';
+        document.body.classList.remove('blur-background');
+        document.body.style.overflow = ''; 
+      }
+      */
+     
+      
+    
+    </script>
+    <script>
+      let currentStep = [0, 0, 0, 0, 0, 0]; 
+      const steps = [
+        document.querySelectorAll('#walkthrough1 .walkthrough-step'),
+        document.querySelectorAll('#walkthrough2 .walkthrough-step'),
+        document.querySelectorAll('#walkthrough3 .walkthrough-step'),
+        document.querySelectorAll('#walkthrough4 .walkthrough-step'),
+        document.querySelectorAll('#walkthrough5 .walkthrough-step'),
+        document.querySelectorAll('#walkthrough6 .walkthrough-step')
+      ];
+
+      function startWalkthrough(walkthroughId) {
+        currentStep[walkthroughId - 1] = 0;
+        steps[walkthroughId - 1].forEach(step => step.classList.remove('active'));
+        steps[walkthroughId - 1][currentStep[walkthroughId - 1]].classList.add('active');
+        document.getElementById(`walkthrough${walkthroughId}`).style.display = 'flex';
+        updateButtonVisibility(walkthroughId);
+      }
+
+      function closeWalkthrough(walkthroughId) {
+        document.getElementById(`walkthrough${walkthroughId}`).style.display = 'none';
+      }
+
+      function nextStep(walkthroughId) {
+        steps[walkthroughId - 1][currentStep[walkthroughId - 1]].classList.remove('active');
+        currentStep[walkthroughId - 1] = Math.min(currentStep[walkthroughId - 1] + 1, steps[walkthroughId - 1].length - 1);
+        steps[walkthroughId - 1][currentStep[walkthroughId - 1]].classList.add('active');
+        updateButtonVisibility(walkthroughId);
+      }
+
+      function prevStep(walkthroughId) {
+        steps[walkthroughId - 1][currentStep[walkthroughId - 1]].classList.remove('active');
+        currentStep[walkthroughId - 1] = Math.max(currentStep[walkthroughId - 1] - 1, 0);
+        steps[walkthroughId - 1][currentStep[walkthroughId - 1]].classList.add('active');
+        updateButtonVisibility(walkthroughId);
+      }
+
+      function updateButtonVisibility(walkthroughId) {
+        const nextBtn = document.querySelector(`#walkthrough${walkthroughId} .next-btn`);
+        const closeBtn = document.querySelector(`#walkthrough${walkthroughId} .walkthrough-buttons .btn:last-child`);
+        if (currentStep[walkthroughId - 1] === steps[walkthroughId - 1].length - 1) {
+          nextBtn.style.display = 'none';
+          closeBtn.style.display = 'inline-block';
+        } else {
+          nextBtn.style.display = 'inline-block';
+          closeBtn.style.display = 'none';
+        }
+      }
+      function toggleLinks(event) {
+        var links = document.getElementById('socialLinks');
+        if (links.style.display === "none" || links.style.display === "") {
+          links.style.display = "block";
+          links.style.transform = "scale(1)";
+          event.stopPropagation(); 
+        } else {
+          links.style.transform = "scale(0)"; 
+          setTimeout(function() {
+            links.style.display = "none"; 
+          }, 300); 
+        }
+      }
+      
+      document.addEventListener("click", function(event) {
+        var links = document.getElementById('socialLinks');
+        var logo = document.querySelector('.logo');
+        if (!logo.contains(event.target) && !links.contains(event.target)) {
+          links.style.transform = "scale(0)";
+          setTimeout(function() {
+            links.style.display = "none"; 
+          }, 300); 
+        }
+      });
+    </script>
+    <script>
+    
+      function openPopup() {
+        document.getElementById('socialPopup').style.display = 'flex';
+      }
+      
+      function closePopup(event) {
+        if (event) event.stopPropagation();
+        document.getElementById('socialPopup').style.display = 'none';
+      }
+    </script>
+  </body>
+</html>
