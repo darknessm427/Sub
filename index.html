@@ -30,14 +30,7 @@
         margin: 0;
         padding: 0;
         overflow-x: hidden;
-        /* Transition برای بلور حذف شد */
-        /* transition: filter 0.3s ease-in-out; */
       }
-
-      /* کلاس بلور حذف شد */
-      /* body.blur-background {
-        filter: blur(5px);
-      } */
       
       #visit-counter {
       position: fixed;
@@ -185,7 +178,7 @@
         border-radius: 10px;
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
         width: 100vw;
-        max-width: 450px;
+        max-width: 380px;
         text-align: center;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
@@ -341,16 +334,15 @@
       .copyButton.clicked .checkmark {
         display: inline-block;
       }
-
-       /* استایل برای نمایش QR کد در کنار دکمه */
+      
        .qrCodeContainer {
-           display: none; /* به صورت پیش‌فرض مخفی */
-           margin-top: 10px; /* فاصله از دکمه‌ها */
+           display: none;
+           margin-top: 10px;
            text-align: center;
        }
 
        .qrCodeContainer img {
-           width: 200px; /* اندازه QR کد را تنظیم کنید */
+           width: 200px; 
            height: 200px;
            border: 2px solid #087FAC;
            border-radius: 5px;
